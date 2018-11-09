@@ -9,7 +9,7 @@
 
 ## 使用方法
 1.初始化
-一般在Application 中注册([demo](../NetWork/app/src/main/java/com/blq/network/MApplication.java))
+一般在Application 中注册 ([ 查看例子](app/src/main/java/com/blq/network/MApplication.java))
 ```java
   public void initNetWork(){
     //1.先初始化
@@ -19,4 +19,24 @@
     //3.切换服务器
     NetworkManager.serviceToggle("106.15.194.131",3000,BuildConfig.DEBUG);
   }
+```
+2.[接口注册实现](app/src/main/java/com/blq/network/DemoHttpInterface.java) 直接查看例子里面有说明
+
+3.最后的使用   
+使用NetProxy的get 和post 方法，实现get和post 的请求体Builder
+然后填入参数
+最后调用execute() 方法
+
+[例子](app/src/main/java/com/blq/network/MainActivity.java)
+
+>要注意的是 如果继承 AbsJsonCallBack类 如果重写构造函数的的话需要实现super()方法
+
+```java
+public abstract class MyJsonCallBack extends AbsJsonCallBack{
+
+        public MyJsonCallBack(String xxx){
+          //如果实现构造函数一定要加super哦
+            super();
+        }
+    }
 ```
