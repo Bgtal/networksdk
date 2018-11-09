@@ -1,4 +1,40 @@
 apply plugin: 'com.android.library'
+apply plugin: "maven"
+
+
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives androidSourcesJar
+}
+
+uploadArchives{
+    repositories.mavenDeployer{
+
+        Properties properties = new Properties()
+        InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream() ;
+        properties.load(inputStream)
+
+
+        def userName = properties.getProperty( 'nexus.user' )
+        def passWord = properties.getProperty( 'nexus.password' )
+        // 配置本地仓库路径，项目根目录下的repository目录中
+        repository(url: uri('http://mapi.blq.cn:8821/repository/android/')){
+            authentication(userName:userName,password:passWord)
+        }
+        pom.groupId = "com.blq.network"// 唯一标识（通常为模块包名，也可以任意）
+        pom.artifactId = "netsdk" // 项目名称（通常为类库模块名称，也可以任意）
+        pom.version = rootProject.ext.component.networksdk.versionName // 版本号
+    }
+}
+
+task toUpload(dependsOn:uploadArchives){
+
+}
 
 android {
     resourcePrefix rootProject.ext.component.networksdk.resourcePrefix
@@ -38,3 +74,4 @@ dependencies {
     implementation rootProject.ext.libs.snb_util
 
 }
+
