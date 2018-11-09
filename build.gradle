@@ -22,6 +22,7 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://dl.bintray.com/bgtal/maven/'}
+        maven { url 'http://106.15.194.131:8821/repository/android/'}
     }
 }
 
