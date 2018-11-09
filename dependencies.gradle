@@ -1,0 +1,18 @@
+ext{
+
+    libs = [
+            /** test 依赖 **/
+            espresso_core : "com.android.support.test.espresso:espresso-core:3.0.2" ,
+            runner : "com.android.support.test:runner:1.0.2",
+            junit : "junit:junit:4.12",
+
+            /** 系统依赖 **/
+            appcompat : "com.android.support:appcompat-v7:28.0.0",
+
+            /** 三方依赖 **/
+            gson : "com.google.code.gson:gson:2.8.5",
+            okgo : "com.lzy.net:okgo:3.0.4",
+            snb_util : "com.blq.ssnb:snbutil:0.0.3"
+
+    ]
+}

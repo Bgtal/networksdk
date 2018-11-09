@@ -1,0 +1,15 @@
+ext{
+    android = [
+            compileSdkVersion : 28,
+            buildToolsVersion : "28.0.2"
+    ]
+    component = [
+            networksdk:[
+                    minSdkVersion : 21,
+                    targetSdkVersion : 27,
+                    versionCode : 1,
+                    versionName : "0.0.1",
+                    resourcePrefix: "network_"
+            ]
+    ]
+}
