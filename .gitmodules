@@ -1,0 +1,6 @@
+[submodule "networksdk/Depend"]
+	path = networksdk/Depend
+	url = https://gitee.com/yijianet/Depend.git
+[submodule "Depend"]
+	path = Depend
+	url = https://gitee.com/yijianet/Depend.git

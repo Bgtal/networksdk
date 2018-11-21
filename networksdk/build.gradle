@@ -66,12 +66,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation rootProject.ext.libs.appcompat
-    testImplementation rootProject.ext.libs.junit
-    androidTestImplementation rootProject.ext.libs.runner
-    androidTestImplementation rootProject.ext.libs.espresso_core
     implementation rootProject.ext.libs.gson
     implementation rootProject.ext.libs.okgo
-    implementation rootProject.ext.libs.snb_util
+    implementation rootProject.ext.libs.snbutil
 
 }
 

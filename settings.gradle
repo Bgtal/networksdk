@@ -1,1 +1,1 @@
-include ':app', ':networksdk'
+include /*':app',*/ ':networksdk'
