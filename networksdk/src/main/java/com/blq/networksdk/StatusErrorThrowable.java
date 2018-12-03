@@ -25,10 +25,18 @@ public class StatusErrorThrowable extends Exception {
         this.errorMsg = message;
     }
 
+    /**
+     * 错误状态码
+     * @return 非10000的状态码
+     */
     public int getStatus(){
         return  status;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getErrorMsg(){
         return errorMsg;
     }

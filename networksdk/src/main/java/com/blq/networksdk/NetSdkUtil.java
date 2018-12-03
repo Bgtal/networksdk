@@ -22,43 +22,85 @@ import blq.ssnb.snbutil.SnbLog;
  */
 public class NetSdkUtil {
 
+    /**
+     * 格式化网络前缀(http)
+     * @param host 例: www.baidu.com
+     * @param port 例: 8080
+     * @param serviceName 例:/Login
+     * @return 例:http://www.baidu.com:8080/Login
+     */
     public static String getPrefixHttp(String host, int port, String serviceName) {
         return String.format(Locale.CHINA, "http://%s:%d%s", host, port, serviceName);
     }
 
+    /**
+     * 格式化网络前缀(https)
+     * @param host 例: www.baidu.com
+     * @param port 例: 443
+     * @param serviceName 例:/Login
+     * @return 例:https://www.baidu.com:443/Login
+     */
     public static String getPrefixHttps(String host, int port, String serviceName) {
         return String.format(Locale.CHINA, "https://%s:%d%s", host, port, serviceName);
     }
 
     /**
-     * 将参数转换为json后加密的string ,使用addparam("json",returnString)
-     *
-     * @param keys
-     * @param values
-     * @return
+     * 获得参数对象
+     * 该对象的toJsonString 方法返回String 不经过加密
+     * @return 参数对象
      */
-    public static String getParams(String[] keys, String[] values) {
-        return getParams(keys, values, null);
+    public static Params paramsFactory() {
+        return new Params(null);
     }
 
-    public static String getParams(String[] keys, String[] values, String cryptKey) {
-        Map<String, String> map = new HashMap<>(5);
-        for (int i = 0; i < keys.length; i++) {
-            map.put(keys[i], values[i]);
-        }
-        return paramsTranslation(cryptKey, map);
+    /**
+     * 获得参数对象
+     * 若加密key为null 同{@link #paramsFactory()}
+     * 否者该对象的toJsonString 方法返回String 经过加密
+     * @param cryptKey 加密key
+     * @return 参数对象
+     */
+    public static Params paramsFactory(String cryptKey) {
+        return new Params(cryptKey);
     }
 
-    private static String paramsTranslation(String cryptKey, Map<String, String> paramsMap) {
-        String json = new JSONObject(paramsMap).toString();
-        SnbLog.se(NetworkManager.HTTP_LOG_TAG, "request:" + json);
-        String encryData;
-        if (null == cryptKey) {
-            encryData = CryptLib.enctry(json);
-        }else{
-            encryData = CryptLib.enctry(cryptKey,json);
+    /**
+     * 参数对象
+     */
+    public static class Params {
+        private Map<String, String> params;
+        private String cryptKey;
+
+        private Params(String cryptKey) {
+            params = new HashMap<>();
+            this.cryptKey = cryptKey;
         }
-        SnbLog.se(NetworkManager.HTTP_LOG_TAG, "request-enctry:" + encryData);
-        return encryData;
+
+        public Params addParam(String key, String value) {
+            params.put(key, value);
+            return this;
+        }
+
+        public Params addParams(Map<String, String> params) {
+            this.params.putAll(params);
+            return this;
+        }
+
+        public Params replaceParams(Map<String, String> params) {
+            this.params.clear();
+            this.params.putAll(params);
+            return this;
+        }
+
+        public String toJsonString() {
+            JSONObject jsonObject = new JSONObject(params);
+            String json = jsonObject.toString();
+            SnbLog.se(NetworkManager.HTTP_LOG_TAG, "request:" + json);
+            if (cryptKey != null) {
+                json = CryptLib.enctry(cryptKey, json);
+                SnbLog.se(NetworkManager.HTTP_LOG_TAG, "request-enctry:" + json);
+            }
+            return json;
+        }
     }
 }

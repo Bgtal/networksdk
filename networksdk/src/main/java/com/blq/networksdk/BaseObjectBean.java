@@ -16,8 +16,17 @@ import java.io.Serializable;
  */
 class BaseObjectBean<T> implements Serializable {
 
+    /**
+     * 状态码
+     */
     private int status;
+    /**
+     * 返回的数据对象
+     */
     private T data;
+    /**
+     * 状态文字描述
+     */
     private String msg;
 
     public int getStatus() {

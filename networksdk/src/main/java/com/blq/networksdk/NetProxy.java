@@ -26,16 +26,31 @@ import okhttp3.Response;
 
 public class NetProxy {
 
+    /**
+     * 取消网络请求
+     * @param object 请求tag
+     */
     public static void cancelTag(Object object) {
         OkGo.getInstance().cancelTag(object);
     }
 
+    /**
+     * post 请求对象
+     * @param url 请求地址
+     * @param <T> 返回对象
+     * @return post请求构建体
+     */
     public static <T> PostBuilder<T> post(String url) {
         return new PostBuilder<T>(url);
     }
-
-    public static GetBuilder get(String url) {
-        return new GetBuilder(url);
+    /**
+     * get 请求对象
+     * @param url 请求地址
+     * @param <T> 返回对象
+     * @return post请求构建体
+     */
+    public static <T> GetBuilder<T> get(String url) {
+        return new GetBuilder<T>(url);
     }
 
     public static class PostBuilder<T> {

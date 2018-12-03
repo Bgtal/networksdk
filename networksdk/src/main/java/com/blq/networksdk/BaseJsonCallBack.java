@@ -82,9 +82,7 @@ abstract class BaseJsonCallBack<T extends BaseObjectBean> extends AbsCallback<T>
      * @param bodyString 待解密的内容
      * @return 解密后的String内容
      */
-    protected String decrypt(String bodyString) {
-        return CryptLib.decrypt(bodyString);
-    }
+    protected abstract String decrypt(String bodyString);
 
     protected T analysisData(T data) throws StatusErrorThrowable {
         if (data.getStatus() != NetworkManager.HTTP_REQUEST_SUCCESS_STATUS) {

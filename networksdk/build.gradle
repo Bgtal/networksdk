@@ -65,7 +65,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation rootProject.ext.libs.appcompat
+//    implementation rootProject.ext.libs.appcompat
     implementation rootProject.ext.libs.gson
     implementation rootProject.ext.libs.okgo
     implementation rootProject.ext.libs.snbutil

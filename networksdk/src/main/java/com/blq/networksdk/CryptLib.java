@@ -1,7 +1,5 @@
 package com.blq.networksdk;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
@@ -17,6 +15,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import blq.ssnb.snbutil.SnbLog;
 
 /*****************************************************************
  * CrossPlatform CryptLib
@@ -36,12 +36,6 @@ import javax.crypto.spec.SecretKeySpec;
  *****************************************************************/
 
 public class CryptLib {
-
-    private static String CRYPT_LIB_KEY;
-
-    public static void init(String CryptLibKey){
-        CRYPT_LIB_KEY = CryptLibKey;
-    }
 
     /**
      * Encryption mode enumeration
@@ -114,7 +108,6 @@ public class CryptLib {
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
      */
-    @RequiresApi(api = Build.VERSION_CODES.FROYO)
     private String encryptDecrypt(String _inputText, String _encryptionKey,
                                   EncryptMode _mode, String _initVector) throws UnsupportedEncodingException,
             InvalidKeyException, InvalidAlgorithmParameterException,
@@ -234,8 +227,6 @@ public class CryptLib {
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
      */
-
-    @RequiresApi(api = Build.VERSION_CODES.FROYO)
     public String encrypt(String _plainText, String _key, String _iv)
             throws InvalidKeyException, UnsupportedEncodingException,
             InvalidAlgorithmParameterException, IllegalBlockSizeException,
@@ -261,7 +252,6 @@ public class CryptLib {
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
      */
-    @RequiresApi(api = Build.VERSION_CODES.FROYO)
     public String decrypt(String _encryptedText, String _key, String _iv)
             throws InvalidKeyException, UnsupportedEncodingException,
             InvalidAlgorithmParameterException, IllegalBlockSizeException,
@@ -290,8 +280,12 @@ public class CryptLib {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.FROYO)
-    public static String enctry(String cryptKey , String input) {
+    public static String enctry(String cryptKey, String input) {
+        try {
+            checkKey(cryptKey);
+        } catch (IllegalArgumentException e) {
+            SnbLog.se(NetworkManager.HTTP_LOG_TAG, e.getMessage());
+        }
         try {
 
             CryptLib _crypt = new CryptLib();
@@ -318,7 +312,11 @@ public class CryptLib {
     }
 
     public static String decrypt(String cryptKey, String input) {
-//        LogUtils.e("decrypt", "decrypt");
+        try {
+            checkKey(cryptKey);
+        } catch (IllegalArgumentException e) {
+            SnbLog.se(NetworkManager.HTTP_LOG_TAG, e.getMessage());
+        }
         try {
             CryptLib _crypt = new CryptLib();
 
@@ -343,14 +341,14 @@ public class CryptLib {
         return "";
     }
 
-    public static String enctry(String input){
-        checkKey();
-        return enctry(CRYPT_LIB_KEY,input);
+    @Deprecated
+    public static String enctry(String input) {
+        return "";
     }
 
-    public static String decrypt(String input){
-        checkKey();
-        return decrypt(CRYPT_LIB_KEY,input);
+    @Deprecated
+    public static String decrypt(String input) {
+        return "";
     }
 
     //This is how to use CryptLib.java
@@ -380,9 +378,9 @@ public class CryptLib {
         }
     }
 
-    private static void checkKey(){
-        if(CRYPT_LIB_KEY == null||"".equals(CRYPT_LIB_KEY.trim())){
-            throw new IllegalArgumentException("加解密工具未设置秘钥，请在使用前调用CryptLib.init(\"你的秘钥\");方法设置");
+    private static void checkKey(String CRYPT_LIB_KEY) {
+        if (CRYPT_LIB_KEY == null || "".equals(CRYPT_LIB_KEY.trim())) {
+            throw new IllegalArgumentException("加解密工具未设置秘钥");
         }
     }
 }
