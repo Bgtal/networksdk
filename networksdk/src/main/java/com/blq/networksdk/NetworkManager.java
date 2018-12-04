@@ -37,9 +37,10 @@ public class NetworkManager {
 
     /**
      * 第一步注册网络库
+     *
      * @param application
      */
-    public static void initNetwork(Application application){
+    public static void initNetwork(Application application) {
         SnbLog.getBuilder(HTTP_LOG_TAG).isOpen(BuildConfig.DEBUG).setTag(HTTP_LOG_TAG);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
@@ -83,37 +84,41 @@ public class NetworkManager {
                 .setRetryCount(3);
     }
 
-    private static Set<Class<? extends ServiceToggleable>> hashSet= new HashSet<>();
-    private static boolean isFirstToggle = false;
+    private static Set<Class<? extends ServiceToggleable>> hashSet = new HashSet<>();
+    private static boolean isFirstToggle = true;
     private static String lastToggleHost = "";
     private static int lastTogglePost = 0;
+    private static String lastAppServer = "";
     private static boolean lastToggleIsDebug = true;
 
     /**
      * 第二部将需要网络接口注册
+     *
      * @param toggleableClass
      */
-    public static void registerServiceToggleable(Class<? extends ServiceToggleable> toggleableClass){
+    public static void registerServiceToggleable(Class<? extends ServiceToggleable> toggleableClass) {
         hashSet.add(toggleableClass);
-        if(!isFirstToggle){
-            toToggle(toggleableClass,lastToggleHost,lastTogglePost,lastToggleIsDebug);
+        if (!isFirstToggle) {
+            toToggle(toggleableClass, lastToggleHost, lastTogglePost, lastAppServer, lastToggleIsDebug);
         }
     }
 
     /**
      * 切换服务
      * 可用于
-     * @param host host
-     * @param post post
+     *
+     * @param host    host
+     * @param post    post
      * @param isDebug 是否测试
      */
-    public static void serviceToggle(String host, int post , boolean isDebug){
+    public static void serviceToggle(String host, int post, String appServer, boolean isDebug) {
         lastToggleHost = host;
         lastTogglePost = post;
         lastToggleIsDebug = isDebug;
+        lastAppServer = appServer;
 
         for (Class<? extends ServiceToggleable> aClass : hashSet) {
-            toToggle(aClass,host,post,isDebug);
+            toToggle(aClass, host, post, appServer, isDebug);
         }
 
         isFirstToggle = false;
@@ -121,15 +126,16 @@ public class NetworkManager {
 
     /**
      * 分发到子类实现切换接口
-     * @param aClass 注册的class
-     * @param host host
-     * @param post post
+     *
+     * @param aClass  注册的class
+     * @param host    host
+     * @param post    post
      * @param isDebug isDebug
      */
-    private static void toToggle(Class<? extends ServiceToggleable> aClass, String host, int post , boolean isDebug){
+    private static void toToggle(Class<? extends ServiceToggleable> aClass, String host, int post, String appServer, boolean isDebug) {
         try {
             ServiceToggleable toggleable = aClass.newInstance();
-            toggleable.toggleServiceAddress(host, post, isDebug);
+            toggleable.toggleServiceAddress(host, post, appServer, isDebug);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

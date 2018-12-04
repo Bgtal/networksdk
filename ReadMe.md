@@ -1,7 +1,23 @@
 ## 简单的网络请求库
 >> 实现了和具体网络请求分离，如果以后需要修改请求框架 只需要修改库里的请求框架，具体代码不需要修改
 > maven 地址 maven{url 'http://106.15.194.131:8821/repository/android/'}
-> version 'com.blq.network:netsdk:1.0.0'
+> version 'com.blq.network:netsdk:2.0.0'
+
+> 服务器返回结构必须是以下结构
+```Json
+对象
+  {
+  "status":10000,
+  "msg":"请求成功",
+  "data":{}
+  }
+数组
+  {
+  "status":10000,
+  "msg":"请求成功",
+  "data":[]
+  }
+```
 
 ## 对外暴露内容
 * NetworkManager.java 初始化和注册服务器切换等功能

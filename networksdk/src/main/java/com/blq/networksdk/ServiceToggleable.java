@@ -13,5 +13,13 @@ package com.blq.networksdk;
  * </pre>
  */
 public interface ServiceToggleable {
-    void toggleServiceAddress(String host, int post, boolean isDebug);
+    /**
+     * 切换服务器的时候调用
+     *
+     * @param host       例: www.baidu.com
+     * @param post       例: 8080
+     * @param appService 例: /search
+     * @param isDebug    是否是debug模式
+     */
+    void toggleServiceAddress(String host, int post, String appService, boolean isDebug);
 }
