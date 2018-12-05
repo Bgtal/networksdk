@@ -281,10 +281,8 @@ public class CryptLib {
     }
 
     public static String enctry(String cryptKey, String input) {
-        try {
-            checkKey(cryptKey);
-        } catch (IllegalArgumentException e) {
-            SnbLog.se(NetworkManager.HTTP_LOG_TAG, e.getMessage());
+        if (!isKeyExist(cryptKey)) {
+            return input;
         }
         try {
 
@@ -312,10 +310,8 @@ public class CryptLib {
     }
 
     public static String decrypt(String cryptKey, String input) {
-        try {
-            checkKey(cryptKey);
-        } catch (IllegalArgumentException e) {
-            SnbLog.se(NetworkManager.HTTP_LOG_TAG, e.getMessage());
+        if (!isKeyExist(cryptKey)) {
+            return input;
         }
         try {
             CryptLib _crypt = new CryptLib();
@@ -378,9 +374,13 @@ public class CryptLib {
         }
     }
 
-    private static void checkKey(String CRYPT_LIB_KEY) {
-        if (CRYPT_LIB_KEY == null || "".equals(CRYPT_LIB_KEY.trim())) {
-            throw new IllegalArgumentException("加解密工具未设置秘钥");
-        }
+    /**
+     * 判断是否有加密key
+     *
+     * @param CRYPT_LIB_KEY 加密key
+     * @return true 加密key不为空，false加密key为空
+     */
+    private static boolean isKeyExist(String CRYPT_LIB_KEY) {
+        return CRYPT_LIB_KEY != null && !"".equals(CRYPT_LIB_KEY.trim());
     }
 }
