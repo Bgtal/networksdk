@@ -40,7 +40,7 @@
 ```
 2.[接口注册实现](app/src/main/java/com/blq/network/DemoHttpInterface.java) 直接查看例子里面有说明
 
-3.最后的使用   
+3.最后的使用
 使用NetProxy的get 和post 方法，实现get和post 的请求体Builder
 然后填入参数
 最后调用execute() 方法
