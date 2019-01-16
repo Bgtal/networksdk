@@ -24,8 +24,8 @@ import blq.ssnb.snbutil.SnbLog;
  * <p>
  * This cross platform CryptLib uses AES 256 for encryption. This library can
  * be used for encryptoion and de-cryption of string on iOS, Android and Windows
- * platform.<br/>
- * Features: <br/>
+ * platform.
+ * Features:
  * 1. 256 bit AES encryption
  * 2. Random IV generation.
  * 3. Provision for SHA256 hashing of key.

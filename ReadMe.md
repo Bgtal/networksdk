@@ -1,7 +1,10 @@
 ## 简单的网络请求库
 >> 实现了和具体网络请求分离，如果以后需要修改请求框架 只需要修改库里的请求框架，具体代码不需要修改
-> maven 地址 maven{url 'http://106.15.194.131:8821/repository/android/'}
-> version 'com.blq.network:netsdk:2.0.0'
+> maven 地址
+        maven { url 'https://dl.bintray.com/bgtal/maven/'}
+        //由于不稳地就弃用了 maven{url 'http://106.15.194.131:8821/repository/android/'}
+> version ‘com.blq.network:networksdk:2.0.1’
+//因为上传bintray的某些原因，不得将 ‘netsdk’ 改名为 ’networksdk‘ 'com.blq.network:netsdk:2.0.0'
 
 > 服务器返回结构必须是以下结构
 ```Json

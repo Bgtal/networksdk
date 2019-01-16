@@ -2,6 +2,7 @@
 
 apply from : "component.gradle"
 apply from : "Depend/dependencies.gradle"
+apply from : "mBintrayUploadInfo.gradle"
 
 buildscript {
     repositories {
@@ -11,6 +12,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -22,7 +25,6 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://dl.bintray.com/bgtal/maven/'}
-        maven { url 'http://106.15.194.131:8821/repository/android/'}
     }
 }
 

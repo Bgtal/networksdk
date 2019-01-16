@@ -18,7 +18,7 @@ import com.blq.networksdk.ServiceToggleable;
 public class DemoHttpInterface implements ServiceToggleable {
 
     @Override
-    public void toggleServiceAddress(String host, int post, boolean isDebug) {
+    public void toggleServiceAddress(String host, int post, String serviceName,boolean isDebug) {
         //当接口切换的时候回调用该方法
         String demoService;
         String demo2Service;
