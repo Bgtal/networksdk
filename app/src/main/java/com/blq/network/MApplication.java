@@ -32,6 +32,6 @@ public class MApplication extends Application {
         //2.将接口注册到NetWorkManger
         NetworkManager.registerServiceToggleable(DemoHttpInterface.class);
         //3.切换服务器（比如在测试版需要切换到正式版，那么再次调用该方法把正式版本的服务器路径传入就可以了）
-        NetworkManager.serviceToggle("106.15.194.131",3000,"",BuildConfig.DEBUG);
+        NetworkManager.serviceToggle("crm.apiyoo.com",3100,"/mock/79",BuildConfig.DEBUG);
     }
 }

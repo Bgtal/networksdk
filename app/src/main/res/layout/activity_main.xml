@@ -7,19 +7,30 @@
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".MainActivity">
+
     <TextView
         android:id="@+id/tv_login_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text=""/>
+        android:text="" />
+
     <TextView
         android:id="@+id/tv_login_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="16dp"
         android:background="#FFC800"
-        android:text="登录"/>
+        android:padding="16dp"
+        android:text="默认的Base结构" />
+
+    <TextView
+        android:id="@+id/tv_new_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#FFC800"
+        android:padding="16dp"
+        android:text="自定义的Base结构" />
 
 </LinearLayout>

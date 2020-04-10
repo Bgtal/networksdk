@@ -14,7 +14,7 @@ import java.io.Serializable;
  * ================================================
  * </pre>
  */
-class BaseObjectBean<T> implements Serializable {
+class BaseObjectBean<T> implements IBaseObject<T>, Serializable {
 
     /**
      * 状态码

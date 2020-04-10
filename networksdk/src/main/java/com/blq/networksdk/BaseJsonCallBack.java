@@ -22,7 +22,7 @@ import okhttp3.ResponseBody;
  * ================================================
  * </pre>
  */
-abstract class BaseJsonCallBack<T extends BaseObjectBean> extends AbsCallback<T> {
+abstract class BaseJsonCallBack<T extends IBaseObject> extends AbsCallback<T> {
 
 
     private Type mType;

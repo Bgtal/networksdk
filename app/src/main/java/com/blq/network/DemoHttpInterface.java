@@ -18,41 +18,28 @@ import com.blq.networksdk.ServiceToggleable;
 public class DemoHttpInterface implements ServiceToggleable {
 
     @Override
-    public void toggleServiceAddress(String host, int post, String serviceName,boolean isDebug) {
+    public void toggleServiceAddress(String host, int post, String serviceName, boolean isDebug) {
         //当接口切换的时候回调用该方法
         String demoService;
-        String demo2Service;
-        if(isDebug){
+        if (isDebug) {
             //假如是debug 的时候 用的是  Http 请求
-            demoService = NetSdkUtil.getPrefixHttp(host,post,"/mock/36/mobile");
-            //或者请求的接口服务名称修改 比如debug 是 /debug/mobile
-            demo2Service = NetSdkUtil.getPrefixHttp(host,post,"/mock/debug/mobile");
-        }else{
+            demoService = NetSdkUtil.getPrefixHttp(host, post, serviceName + "/demo");
+        } else {
             //release 用的是Https 请求
-            demoService = NetSdkUtil.getPrefixHttps(host,post,"/mock/36/mobile");
-            //release 用的是 /release/mobile
-            demo2Service = NetSdkUtil.getPrefixHttp(host,post,"/mock/release/mobile");
+            demoService = NetSdkUtil.getPrefixHttps(host, post, serviceName + "/demo");
         }
         //我们可以在这个方法里面进行请求前缀的修改
         DemoInterface.init(demoService);
     }
 
-    public static class DemoInterface{
-        /**
-         * 登录接口
-         */
-        public static String DEMO_LOGIN;
+    public static class DemoInterface {
+        public static String DEMO_1;
+        public static String DEMO_2;
 
-        private static void init(String service){
-            DEMO_LOGIN = service + "/login";
-        }
-    }
+        private static void init(String service) {
 
-    public static class DemoInterFace2{
-        public static String DEMO2_INFO;
-
-        private static void init(String service){
-            DEMO2_INFO = service + "/xxxxxx";
+            DEMO_1 = service + "/demo1";
+            DEMO_2 = service + "/demo2";
         }
     }
 }

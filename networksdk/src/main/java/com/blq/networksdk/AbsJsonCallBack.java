@@ -20,10 +20,10 @@ import java.lang.reflect.Type;
 
 public abstract class AbsJsonCallBack<T> {
 
-    private BaseJsonCallBack<BaseObjectBean<T>> mJsonCallBack;
+    private BaseJsonCallBack<IBaseObject<T>> mJsonCallBack;
 
-    BaseJsonCallBack<BaseObjectBean<T>> getJsonCallBack() {
-        if(mJsonCallBack == null){
+    BaseJsonCallBack<IBaseObject<T>> getJsonCallBack() {
+        if (mJsonCallBack == null) {
             throw new IllegalArgumentException("子类使用时需要继承并实现super()方法");
         }
         return mJsonCallBack;
@@ -33,11 +33,11 @@ public abstract class AbsJsonCallBack<T> {
 
         ParameterizedType gType = (ParameterizedType) getClass().getGenericSuperclass();
         Type tType = gType.getActualTypeArguments()[0];
-        ParameterizedTypeImpl type = new ParameterizedTypeImpl(BaseObjectBean.class, tType);
+        ParameterizedTypeImpl type = new ParameterizedTypeImpl(getBaseClass(), tType);
 
-        mJsonCallBack = new BaseJsonCallBack<BaseObjectBean<T>>(type) {
+        mJsonCallBack = new BaseJsonCallBack<IBaseObject<T>>(type) {
             @Override
-            public void onSuccess(BaseObjectBean<T> data) {
+            public void onSuccess(IBaseObject<T> data) {
                 AbsJsonCallBack.this.onSuccess(data.getData());
             }
 
@@ -51,6 +51,10 @@ public abstract class AbsJsonCallBack<T> {
                 return AbsJsonCallBack.this.decrypt(bodyString);
             }
         };
+    }
+
+    protected Class getBaseClass() {
+        return BaseObjectBean.class;
     }
 
     protected abstract void onSuccess(T data);
