@@ -39,7 +39,6 @@ import okhttp3.OkHttpClient;
 public class NetworkManager {
 
     public static final String HTTP_LOG_TAG = "snblog_http";
-    public static final int HTTP_REQUEST_SUCCESS_STATUS = 10000;
 
     /**
      * 第一步注册网络库

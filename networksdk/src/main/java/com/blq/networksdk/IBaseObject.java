@@ -16,15 +16,17 @@ import java.io.Serializable;
  */
 public interface IBaseObject<T> extends Serializable {
 
-    public int getStatus();
+    int successStatusCode();
 
-    public void setStatus(int status);
+    int getStatus();
 
-    public T getData();
+    void setStatus(int status);
 
-    public void setData(T data);
+    T getData();
 
-    public String getMsg();
+    void setData(T data);
 
-    public void setMsg(String msg);
+    String getMsg();
+
+    void setMsg(String msg);
 }

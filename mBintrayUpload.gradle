@@ -11,7 +11,7 @@ tasks.withType(JavaCompile) {
 group = publishedGroupId
 
 install {
-    repositories.mavenInstaller{
+    repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
         pom {
             project {
@@ -81,7 +81,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
  * 配置javadoc的编码格式
  */
 javadoc {
-    options{
+    options {
         encoding "UTF-8"
         charSet 'UTF-8'
         author true
@@ -89,7 +89,7 @@ javadoc {
         links "http://docs.oracle.com/javase/8/docs/api"
         title artifact
     }
-    println(">>>>"+project.projectDir)
+    println(">>>>" + project.projectDir)
 }
 
 artifacts {
@@ -126,7 +126,7 @@ bintray {
 }
 
 
-task upload(){}
+task upload() {}
 upload.doFirst {}.dependsOn(install)
 upload.dependsOn(clean)
 

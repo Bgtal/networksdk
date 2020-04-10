@@ -18,15 +18,22 @@ import java.io.Serializable;
  */
 public class NewBaseObjectBean<T> implements IBaseObject<T>, Serializable {
 
+    private final int SuccessCode = 10000;
+
     private boolean isSuccess;
     private String message;
     private int count;
     private T data;
 
     @Override
+    public int successStatusCode() {
+        return SuccessCode;
+    }
+
+    @Override
     public int getStatus() {
         if (isSuccess) {
-            return 10000;
+            return SuccessCode;
         }
         return -1;
     }

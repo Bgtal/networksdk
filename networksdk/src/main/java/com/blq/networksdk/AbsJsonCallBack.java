@@ -53,6 +53,11 @@ public abstract class AbsJsonCallBack<T> {
         };
     }
 
+    /**
+     * 获得外壳对象类
+     *
+     * @return
+     */
     protected Class getBaseClass() {
         return BaseObjectBean.class;
     }

@@ -29,6 +29,11 @@ class BaseObjectBean<T> implements IBaseObject<T>, Serializable {
      */
     private String msg;
 
+    @Override
+    public int successStatusCode() {
+        return 10000;
+    }
+
     public int getStatus() {
         return status;
     }
