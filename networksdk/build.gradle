@@ -39,7 +39,6 @@ apply plugin: 'com.android.library'
 android {
     resourcePrefix rootProject.ext.component.networksdk.resourcePrefix
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
 
     defaultConfig {

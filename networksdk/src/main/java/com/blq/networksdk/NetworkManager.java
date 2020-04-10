@@ -9,11 +9,17 @@ import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.DBCookieStore;
 import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.lzy.okgo.model.HttpHeaders;
+import com.lzy.okgo.model.HttpParams;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+
+import javax.net.ssl.X509TrustManager;
 
 import blq.ssnb.snbutil.SnbLog;
 import okhttp3.OkHttpClient;
@@ -41,11 +47,44 @@ public class NetworkManager {
      * @param application
      */
     public static void initNetwork(Application application) {
-        SnbLog.getBuilder(HTTP_LOG_TAG).isOpen(BuildConfig.DEBUG).setTag(HTTP_LOG_TAG);
+        initNetwork(application, new NormalNetConfig());
+    }
+
+    private static class NormalNetConfig implements INetConfig {
+
+        @Override
+        public String NetLogTag() {
+            return HTTP_LOG_TAG;
+        }
+
+        @Override
+        public X509TrustManager X509TrustManager() {
+            return null;
+        }
+
+        @Override
+        public HashMap<String, String> globalHeaders() {
+            return null;
+        }
+
+        @Override
+        public HashMap<String, String> globalParams() {
+            return null;
+        }
+    }
+
+    public static void initNetwork(Application application, INetConfig netConfig) {
+        String tag = netConfig.NetLogTag();
+        if (tag == null) {
+            tag = HTTP_LOG_TAG;
+        }
+        SnbLog.getBuilder(tag).isOpen(BuildConfig.DEBUG).setTag(tag);
+
+
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
         //------------添加LOG相关------start--------------
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(HTTP_LOG_TAG);
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(tag);
         //log打印级别，决定了log显示的详细程度
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
         //log颜色级别，决定了log在控制台显示的颜色
@@ -68,7 +107,12 @@ public class NetworkManager {
         builder.cookieJar(new CookieJarImpl(new DBCookieStore(application)));
 
         // ------------https相关设置------start--------------
-        HttpsUtils.SSLParams sslParams1 = HttpsUtils.getSslSocketFactory();
+        HttpsUtils.SSLParams sslParams1;
+        if (netConfig.X509TrustManager() == null) {
+            sslParams1 = HttpsUtils.getSslSocketFactory();
+        } else {
+            sslParams1 = HttpsUtils.getSslSocketFactory(netConfig.X509TrustManager());
+        }
         builder.sslSocketFactory(sslParams1.sSLSocketFactory, sslParams1.trustManager);
         // ------------https相关设置------end--------------
         OkGo.getInstance()
@@ -82,6 +126,22 @@ public class NetworkManager {
                 .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)
                 //全局统一超时重连次数，默认为三次，那么最差的情况会请求4次(一次原始请求，三次重连请求)，不需要可以设置为0
                 .setRetryCount(3);
+        if (netConfig.globalHeaders() != null) {
+            HttpHeaders headers = new HttpHeaders();
+            for (Map.Entry<String, String> entry : netConfig.globalHeaders().entrySet()) {
+                headers.put(entry.getKey(), entry.getValue());
+            }
+            OkGo.getInstance().addCommonHeaders(headers);
+        }
+        if (netConfig.globalParams() != null) {
+            HttpParams params = new HttpParams();
+            for (Map.Entry<String, String> entry : netConfig.globalParams().entrySet()) {
+                params.put(entry.getKey(), entry.getValue());
+            }
+            OkGo.getInstance().addCommonParams(params);
+        }
+
+
     }
 
     private static Set<Class<? extends ServiceToggleable>> hashSet = new HashSet<>();
