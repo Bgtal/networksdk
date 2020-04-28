@@ -104,6 +104,11 @@ public class NetProxy {
             return this;
         }
 
+        public PostBuilder<T> upJson(String json) {
+            mRequest.upJson(json);
+            return this;
+        }
+
         public PostBuilder<T> paramsFiles(String key, List<File> files) {
             mRequest.addFileParams(key, files);
             return this;
