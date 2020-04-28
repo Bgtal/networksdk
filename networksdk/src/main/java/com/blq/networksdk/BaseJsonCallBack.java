@@ -22,7 +22,7 @@ import okhttp3.ResponseBody;
  * ================================================
  * </pre>
  */
-abstract class BaseJsonCallBack<T extends BaseObjectBean> extends AbsCallback<T> {
+abstract class BaseJsonCallBack<T extends IBaseObject> extends AbsCallback<T> {
 
 
     private Type mType;
@@ -85,7 +85,7 @@ abstract class BaseJsonCallBack<T extends BaseObjectBean> extends AbsCallback<T>
     protected abstract String decrypt(String bodyString);
 
     protected T analysisData(T data) throws StatusErrorThrowable {
-        if (data.getStatus() != NetworkManager.HTTP_REQUEST_SUCCESS_STATUS) {
+        if (data.getStatus() != data.successStatusCode()) {
             throw new StatusErrorThrowable(data.getStatus(), data.getMsg());
         }
         return data;
@@ -97,7 +97,7 @@ abstract class BaseJsonCallBack<T extends BaseObjectBean> extends AbsCallback<T>
         int errorStatus = -1;
         String errorMsg = "网络请求错误，请稍后再试";
         Throwable throwable = response.getException();
-        if (throwable != null && throwable instanceof StatusErrorThrowable) {
+        if (throwable instanceof StatusErrorThrowable) {
             StatusErrorThrowable statusErrorThrowable = (StatusErrorThrowable) throwable;
             errorStatus = statusErrorThrowable.getStatus();
             errorMsg = statusErrorThrowable.getErrorMsg();

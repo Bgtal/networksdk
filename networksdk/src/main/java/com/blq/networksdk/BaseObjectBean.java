@@ -14,7 +14,7 @@ import java.io.Serializable;
  * ================================================
  * </pre>
  */
-class BaseObjectBean<T> implements Serializable {
+class BaseObjectBean<T> implements IBaseObject<T>, Serializable {
 
     /**
      * 状态码
@@ -28,6 +28,11 @@ class BaseObjectBean<T> implements Serializable {
      * 状态文字描述
      */
     private String msg;
+
+    @Override
+    public int successStatusCode() {
+        return 10000;
+    }
 
     public int getStatus() {
         return status;

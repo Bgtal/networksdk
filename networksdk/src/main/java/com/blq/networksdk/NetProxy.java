@@ -28,6 +28,7 @@ public class NetProxy {
 
     /**
      * 取消网络请求
+     *
      * @param object 请求tag
      */
     public static void cancelTag(Object object) {
@@ -36,6 +37,7 @@ public class NetProxy {
 
     /**
      * post 请求对象
+     *
      * @param url 请求地址
      * @param <T> 返回对象
      * @return post请求构建体
@@ -43,8 +45,10 @@ public class NetProxy {
     public static <T> PostBuilder<T> post(String url) {
         return new PostBuilder<T>(url);
     }
+
     /**
      * get 请求对象
+     *
      * @param url 请求地址
      * @param <T> 返回对象
      * @return post请求构建体
@@ -54,7 +58,7 @@ public class NetProxy {
     }
 
     public static class PostBuilder<T> {
-        PostRequest<BaseObjectBean<T>> mRequest;
+        PostRequest<IBaseObject<T>> mRequest;
 
         private PostBuilder(String url) {
             mRequest = OkGo.post(url);
@@ -117,7 +121,8 @@ public class NetProxy {
     }
 
     public static class GetBuilder<T> {
-        GetRequest<BaseObjectBean<T>> mRequest;
+        GetRequest<IBaseObject<T>> mRequest;
+//        GetRequest<BaseObjectBean<T>> mRequest;
 
         private GetBuilder(String url) {
             mRequest = OkGo.get(url);
