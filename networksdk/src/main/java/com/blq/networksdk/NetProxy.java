@@ -116,7 +116,7 @@ public class NetProxy {
 
         public String execute() throws IOException {
             Response body = mRequest.execute();
-            return body.toString();
+            return body.body().string();
         }
 
         public void execute(AbsJsonCallBack<T> callBack) {
@@ -170,7 +170,7 @@ public class NetProxy {
 
         public String execute() throws IOException {
             Response body = mRequest.execute();
-            return body.toString();
+            return body.body().string();
         }
 
         public void execute(AbsJsonCallBack<T> callBack) {

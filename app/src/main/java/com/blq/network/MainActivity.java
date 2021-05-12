@@ -1,5 +1,6 @@
 package com.blq.network;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.widget.TextView;
 
 import com.blq.networksdk.AbsJsonCallBack;
 import com.blq.networksdk.NetProxy;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -71,9 +74,8 @@ public class MainActivity extends AppCompatActivity {
                         return bodyString;
                     }
 
-
                     @Override
-                    protected Class getBaseClass() {
+                    protected Class<?> getBaseClass() {
                         return NewBaseObjectBean.class;
                     }
                 });

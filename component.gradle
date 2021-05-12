@@ -7,8 +7,8 @@ ext{
             networksdk:[
                     minSdkVersion : 21,
                     targetSdkVersion : 27,
-                    versionCode : 10,
-                    versionName : "2.1.1",
+                    versionCode : 11,
+                    versionName : "2.1.2",
                     resourcePrefix: "network_"
             ]
     ]

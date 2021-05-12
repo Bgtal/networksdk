@@ -58,7 +58,7 @@ public abstract class AbsJsonCallBack<T> {
      *
      * @return
      */
-    protected Class getBaseClass() {
+    protected Class<?> getBaseClass() {
         return BaseObjectBean.class;
     }
 

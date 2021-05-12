@@ -3,7 +3,9 @@ package com.blq.networksdk;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -68,7 +70,7 @@ public class NetSdkUtil {
      * 参数对象
      */
     public static class Params {
-        private Map<String, String> params;
+        private Map<String, Object> params;
         private String cryptKey;
 
         private Params(String cryptKey) {
@@ -81,11 +83,72 @@ public class NetSdkUtil {
             return this;
         }
 
+        public Params addParam(String key,int value){
+            params.put(key,value);
+            return this;
+        }
+
+        public Params addParam(String key,long value){
+            params.put(key,value);
+            return this;
+        }
+
+        public Params addParam(String key, float value) {
+            params.put(key, value);
+            return this;
+        }
+
+        public Params addParam(String key, boolean value) {
+            params.put(key, value);
+            return this;
+        }
+
+        public Params addParam(String key, List<Params> list) {
+            List<Map<String, Object>> ls = new ArrayList<>();
+            for (Params params : list) {
+                ls.add(params.params);
+            }
+            params.put(key, ls);
+            return this;
+        }
+
+        public Params addParamString(String key, List<String> list) {
+            params.put(key, list);
+            return this;
+        }
+        public Params addParamInt(String key, List<Integer> list) {
+            params.put(key, list);
+            return this;
+        }
+
+        public Params addParamLong(String key, List<Long> list) {
+            params.put(key, list);
+            return this;
+        }
+        public Params addParam(Params params) {
+            this.params.putAll(params.params);
+            return this;
+        }
+
+        public Params addParam(String key, Params params) {
+            this.params.put(key, params.params);
+            return this;
+        }
+
+        public Params replaceParams(Params params) {
+            this.params.clear();
+            this.params.putAll(params.params);
+            return this;
+        }
+
+
+        @Deprecated()
         public Params addParams(Map<String, String> params) {
             this.params.putAll(params);
             return this;
         }
 
+        @Deprecated
         public Params replaceParams(Map<String, String> params) {
             this.params.clear();
             this.params.putAll(params);
